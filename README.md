@@ -7,7 +7,8 @@ Introduction
 This set of tools is intended to help using translation tools and platforms (like transifex for exemple) to translate your wxl translation files from wix.
 Wix is a windows framework to build MSI installation files that can produce localized installers using XML files containing the localized strings (called wxl files). Unfortunately, a lot (if not most) of the translation platforms can't work with these files.
 
-wxl-po-tools contains 2 small utilities that help "translate" your wxl files into standard GNU's gettext po files that can be used on any translation tool or platform and to convert back the translated po file to a wxl file
+wxl-po-tools contains 3 small utilities that help "translate" your wxl files into standard GNU's gettext po files that can be used on any translation tool or platform and to convert back the translated po file to a wxl file.
+You can also convert a wxl source file and a wxl translated file into a single translated po file.
 
 Requirements
 ------------
