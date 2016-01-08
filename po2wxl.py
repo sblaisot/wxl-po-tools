@@ -38,6 +38,7 @@ for entry in po:
         translation = entry.msgstr;
     else:
         translation = entry.msgid;
+    translation = "&#13;&#10;".join(translation.split("\n")).replace('\r', '');
     f.write("  <String Id=\"" + entry.msgctxt + "\">" + translation + "</String>\n");
 
 f.write("</WixLocalization>\n");
