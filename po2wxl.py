@@ -25,7 +25,7 @@ language = [value for name, value in metadata if name == "Language"]
 culture=language[0].lower().replace('_','-');
 
 f = open(destfile,'w');
-f.write("<\?xml version=\"1.0\" encoding=\"utf-8\"\?>\n");
+f.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
 f.write("<WixLocalization Culture=\"" + culture + "\" Codepage=\"1252\"\n");
 f.write("                 xmlns=\"http://schemas.microsoft.com/wix/2006/localization\">\n");
 
@@ -33,7 +33,7 @@ f.write("                 xmlns=\"http://schemas.microsoft.com/wix/2006/localiza
 for entry in po:
     if entry.comment != "":
         f.write("\n");
-        f.write("  <!-- " + entry.comment + " -->\n");
+        f.write("  <!--" + entry.comment + " -->\n");
     if entry.msgstr != "":
         translation = entry.msgstr;
     else:
