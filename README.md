@@ -13,7 +13,9 @@ Requirements
 ------------
 
 These tools are written in python and use xml.dom.minidom and polib
+
 xml.dom.minidom comes from the standard python distribution.
+
 polib can be installed with `pip install polib`
 
 wxl2pot.py
