@@ -33,7 +33,10 @@ comment = "";
 
 for node in nodes:
     if node.nodeType == node.COMMENT_NODE:
-        comment = node.data;
+        if not comment:
+            comment = node.data;
+        else:
+            comment = comment+ "\n" + node.data
     if node.nodeType == node.ELEMENT_NODE:
         if node.tagName == "String":
             stringId = node.getAttribute("Id");
