@@ -33,7 +33,7 @@ f.write("                 xmlns=\"http://schemas.microsoft.com/wix/2006/localiza
 for entry in po:
     if entry.comment != "":
         f.write("\n");
-        f.write("  <!--" + entry.comment + " -->\n");
+        f.write("  <!--" + entry.comment.replace('\n', ' -->\n  <!--') + " -->\n");
     if entry.msgstr != "":
         translation = entry.msgstr;
     else:
