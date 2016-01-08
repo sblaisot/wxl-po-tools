@@ -7,8 +7,8 @@ import polib;
 
 
 if len(sys.argv) <= 2:
-	print "Usage: wxl2pot.py <wxl file> <pot file>";
-	os._exit(1);
+    print "Usage: wxl2pot.py <wxl file> <pot file>";
+    os._exit(1);
 
 sourcefile = sys.argv[1];
 destfile = sys.argv[2];
@@ -32,18 +32,18 @@ nodes = root.childNodes;
 comment = "";
 
 for node in nodes:
-	if node.nodeType == node.COMMENT_NODE:
-		comment = node.data;
-	if node.nodeType == node.ELEMENT_NODE:
-		if node.tagName == "String":
-			stringId = node.getAttribute("Id");
-			stringContent = node.firstChild.data;
-			entry = polib.POEntry(
-				comment = comment,
-				msgctxt = stringId,
-				msgid = stringContent
-			)
-			po.append(entry)
-			if comment != "":
-				comment = "";
+    if node.nodeType == node.COMMENT_NODE:
+        comment = node.data;
+    if node.nodeType == node.ELEMENT_NODE:
+        if node.tagName == "String":
+            stringId = node.getAttribute("Id");
+            stringContent = node.firstChild.data;
+            entry = polib.POEntry(
+                comment = comment,
+                msgctxt = stringId,
+                msgid = stringContent
+            )
+            po.append(entry)
+            if comment != "":
+                comment = "";
 po.save(destfile);

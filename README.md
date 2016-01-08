@@ -24,6 +24,14 @@ Usage:
 
 read the wxl_sourcefile content and produces a pot file (typically a po file without any translation) as pot_destfile
 
+transwxl2po.py
+--------------
+
+Usage:
+`transwxl2po.py <wxl_sourcefile> <wxl_translationfile> <translated_po_destfile>`
+
+Read the original wxl file and a translated one and create a translated po file as translated_po_destfile
+
 po2wxl.py
 ---------
 

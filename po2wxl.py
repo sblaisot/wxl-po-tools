@@ -11,8 +11,8 @@ import polib;
 
 
 if len(sys.argv) <= 2:
-        print "Usage: wxl2pot.py <wxl file> <pot file>";
-        os._exit(1);
+    print "Usage: wxl2pot.py <wxl file> <pot file>";
+    os._exit(1);
 
 sourcefile = sys.argv[1];
 destfile = sys.argv[2];
