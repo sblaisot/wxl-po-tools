@@ -19,6 +19,10 @@ destfile = sys.argv[2];
 
 po = polib.pofile(sourcefile);
 
+if po.percent_translated() < 60:
+    print "Skipping " + sourcefile + ": translated at " + str(po.percent_translated()) + "%, below the 60% limit\n";
+    os._exit(0);
+
 metadata = po.ordered_metadata();
 language = [value for name, value in metadata if name == "Language"]
 
