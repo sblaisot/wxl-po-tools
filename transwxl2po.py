@@ -56,40 +56,40 @@ if len(args) < 3:
     usage()
     sys.exit(1)
 
-sourcefile = args[0];
-transfile = args[1];
-destfile = args[2];
+sourcefile = args[0]
+transfile = args[1]
+destfile = args[2]
 
 
-transdoc = minidom.parse(transfile);
+transdoc = minidom.parse(transfile)
 
-transwixloc = transdoc.getElementsByTagName("WixLocalization")[0];
-transculture = transwixloc.getAttribute("Culture");
+transwixloc = transdoc.getElementsByTagName("WixLocalization")[0]
+transculture = transwixloc.getAttribute("Culture")
 
-transculture = transculture[:transculture.index('-')] + '_' + transculture[(transculture.index('-') + 1):].upper();
+transculture = transculture[:transculture.index('-')] + '_' + transculture[(transculture.index('-') + 1):].upper()
 
-transroot = transdoc.documentElement;
-transnodes = transroot.childNodes;
+transroot = transdoc.documentElement
+transnodes = transroot.childNodes
 
-translatedStrings = {};
+translatedStrings = {}
 
 for node in transnodes:
     if node.nodeType == node.ELEMENT_NODE:
         if node.tagName == "String":
-            stringId = node.getAttribute("Id");
+            stringId = node.getAttribute("Id")
             if stringId == langid:
                 continue
-            stringContent = node.firstChild.data;
-            translatedStrings[stringId] = stringContent;
+            stringContent = node.firstChild.data
+            translatedStrings[stringId] = stringContent
 
 
-doc = minidom.parse(sourcefile);
+doc = minidom.parse(sourcefile)
 
-wixloc = doc.getElementsByTagName("WixLocalization")[0];
-culture = wixloc.getAttribute("Culture");
-codepage = wixloc.getAttribute("Codepage");
+wixloc = doc.getElementsByTagName("WixLocalization")[0]
+culture = wixloc.getAttribute("Culture")
+codepage = wixloc.getAttribute("Codepage")
 
-po = polib.POFile(wrapwidth=0);
+po = polib.POFile(wrapwidth=0)
 po.metadata = {
     'MIME-Version': '1.0',
     'Content-Type': 'text/plain; charset=utf-8',
@@ -97,23 +97,23 @@ po.metadata = {
     'Language': transculture
 }
 
-root = doc.documentElement;
-nodes = root.childNodes;
+root = doc.documentElement
+nodes = root.childNodes
 
-comment = "";
+comment = ""
 
 for node in nodes:
     if node.nodeType == node.COMMENT_NODE:
-        comment = node.data;
+        comment = node.data
     if node.nodeType == node.ELEMENT_NODE:
         if node.tagName == "String":
-            stringId = node.getAttribute("Id");
+            stringId = node.getAttribute("Id")
             if stringId == langid:
                 continue
 
-            stringContent = node.firstChild.data;
+            stringContent = node.firstChild.data
             if stringId in translatedStrings:
-                translation = translatedStrings[stringId];
+                translation = translatedStrings[stringId]
             else:
                 translation = stringContent; 
             entry = polib.POEntry(
@@ -124,5 +124,5 @@ for node in nodes:
             )
             po.append(entry)
             if comment != "":
-                comment = "";
-po.save(destfile);
+                comment = ""
+po.save(destfile)

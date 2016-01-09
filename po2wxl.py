@@ -8,7 +8,7 @@ sys.setdefaultencoding('utf8')
 
 import getopt
 import polib
-from lcid import LCIDs;
+from lcid import LCIDs
 
 def version():
     print "po2wxl.py version 0.1\n"
@@ -61,33 +61,33 @@ if len(args) < 2:
     usage()
     sys.exit(1)
 
-sourcefile = args[0];
-destfile = args[1];
+sourcefile = args[0]
+destfile = args[1]
 
-po = polib.pofile(sourcefile);
+po = polib.pofile(sourcefile)
 
 if po.percent_translated() < 60:
-    print "Skipping " + sourcefile + ": translated at " + str(po.percent_translated()) + "%, below the 60% limit\n";
-    os._exit(0);
+    print "Skipping " + sourcefile + ": translated at " + str(po.percent_translated()) + "%, below the 60% limit\n"
+    os._exit(0)
 
-metadata = po.ordered_metadata();
+metadata = po.ordered_metadata()
 language = [value for name, value in metadata if name == "Language"]
 
-culture = language[0].lower().replace('_','-');
-codepage = LCIDs[culture]['codepage'];
-langIdAuto = LCIDs[culture]['LCID'];
+culture = language[0].lower().replace('_','-')
+codepage = LCIDs[culture]['codepage']
+langIdAuto = LCIDs[culture]['LCID']
 
-f = open(destfile,'w');
-f.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
-f.write("<WixLocalization Culture=\"" + culture + "\" Codepage=\"" + str(codepage) + "\"\n");
-f.write("                 xmlns=\"http://schemas.microsoft.com/wix/2006/localization\">\n");
-f.write("\n");
-f.write("  <!-- ---------------------------------------------------- -->\n");
-f.write("  <!-- This wxl file has been auto generated from a po file -->\n");
-f.write("  <!-- using https://github.com/sblaisot/wxl-po-tools       -->\n");
-f.write("  <!-- Source File: " + sourcefile.ljust(39) + " -->\n");
-f.write("  <!-- ---------------------------------------------------- -->\n");
-f.write("\n");
+f = open(destfile,'w')
+f.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n")
+f.write("<WixLocalization Culture=\"" + culture + "\" Codepage=\"" + str(codepage) + "\"\n")
+f.write("                 xmlns=\"http://schemas.microsoft.com/wix/2006/localization\">\n")
+f.write("\n")
+f.write("  <!-- ---------------------------------------------------- -->\n")
+f.write("  <!-- This wxl file has been auto generated from a po file -->\n")
+f.write("  <!-- using https://github.com/sblaisot/wxl-po-tools       -->\n")
+f.write("  <!-- Source File: " + sourcefile.ljust(39) + " -->\n")
+f.write("  <!-- ---------------------------------------------------- -->\n")
+f.write("\n")
 
 if langid:
     f.write("  <!-- This contains the LangID and should be translated to reflect the correct LangID. -->\n")
@@ -97,14 +97,14 @@ if langid:
 
 for entry in po:
     if entry.comment != "":
-        f.write("\n");
-        f.write("  <!--" + entry.comment.replace('\n', ' -->\n  <!--') + " -->\n");
+        f.write("\n")
+        f.write("  <!--" + entry.comment.replace('\n', ' -->\n  <!--') + " -->\n")
     if entry.msgstr != "":
-        translation = entry.msgstr;
+        translation = entry.msgstr
     else:
-        translation = entry.msgid;
-    translation = "&#13;&#10;".join(translation.split("\n")).replace('\r', '');
-    f.write("  <String Id=\"" + entry.msgctxt + "\">" + translation + "</String>\n");
+        translation = entry.msgid
+    translation = "&#13;&#10;".join(translation.split("\n")).replace('\r', '')
+    f.write("  <String Id=\"" + entry.msgctxt + "\">" + translation + "</String>\n")
 
-f.write("</WixLocalization>\n");
-f.close;
+f.write("</WixLocalization>\n")
+f.close
