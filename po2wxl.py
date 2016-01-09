@@ -68,7 +68,7 @@ po = polib.pofile(sourcefile)
 
 if po.percent_translated() < 60:
     print "Skipping " + sourcefile + ": translated at " + str(po.percent_translated()) + "%, below the 60% limit\n"
-    os._exit(0)
+    sys.exit(0)
 
 metadata = po.ordered_metadata()
 language = [value for name, value in metadata if name == "Language"]
@@ -82,11 +82,11 @@ f.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n")
 f.write("<WixLocalization Culture=\"" + culture + "\" Codepage=\"" + str(codepage) + "\"\n")
 f.write("                 xmlns=\"http://schemas.microsoft.com/wix/2006/localization\">\n")
 f.write("\n")
-f.write("  <!-- ---------------------------------------------------- -->\n")
+f.write("  <!-- .................................................... -->\n")
 f.write("  <!-- This wxl file has been auto generated from a po file -->\n")
 f.write("  <!-- using https://github.com/sblaisot/wxl-po-tools       -->\n")
 f.write("  <!-- Source File: " + sourcefile.ljust(39) + " -->\n")
-f.write("  <!-- ---------------------------------------------------- -->\n")
+f.write("  <!-- .................................................... -->\n")
 f.write("\n")
 
 if langid:
