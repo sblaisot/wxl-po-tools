@@ -30,6 +30,7 @@ LCIDs = {
 'bg': {'locale': "Bulgarian", 'language': "bg", 'LCID': 1026, 'codepage': 1251},
 'my': {'locale': "Burmese", 'language': "my", 'LCID': 1109, 'codepage': 0},
 'ca': {'locale': "Catalan", 'language': "ca", 'LCID': 1027, 'codepage': 1252},
+'ca-es': {'locale': "Catalan", 'language': "ca", 'LCID': 1027, 'codepage': 1252},
 'zh-cn': {'locale': "Chinese - China", 'language': "zh", 'LCID': 2052, 'codepage': 0},
 'zh-hk': {'locale': "Chinese - Hong Kong SAR", 'language': "zh", 'LCID': 3076, 'codepage': 0},
 'zh-mo': {'locale': "Chinese - Macau SAR", 'language': "zh", 'LCID': 5124, 'codepage': 0},
