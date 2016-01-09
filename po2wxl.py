@@ -8,6 +8,7 @@ sys.setdefaultencoding('utf8')
 
 import os;
 import polib;
+from lcid import LCIDs;
 
 
 if len(sys.argv) <= 2:
@@ -26,13 +27,19 @@ if po.percent_translated() < 60:
 metadata = po.ordered_metadata();
 language = [value for name, value in metadata if name == "Language"]
 
-culture=language[0].lower().replace('_','-');
+culture = language[0].lower().replace('_','-');
+codepage = LCIDs[culture]['codepage'];
+langId = LCIDs[culture]['LCID'];
 
 f = open(destfile,'w');
 f.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
-f.write("<WixLocalization Culture=\"" + culture + "\" Codepage=\"1252\"\n");
+f.write("<WixLocalization Culture=\"" + culture + "\" Codepage=\"" + str(codepage) + "\"\n");
 f.write("                 xmlns=\"http://schemas.microsoft.com/wix/2006/localization\">\n");
-
+f.write("\n");
+f.write("<!-- This wxl file has been auto generated from a po file -->\n");
+f.write("<!-- using https://github.com/sblaisot/wxl-po-tools -->\n");
+f.write("<!-- Source File: " + sourcefile + " -->\n");
+f.write("\n");
 
 for entry in po:
     if entry.comment != "":
