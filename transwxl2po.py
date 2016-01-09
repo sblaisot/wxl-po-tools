@@ -1,18 +1,64 @@
 #!/usr/bin/python
 
-import sys;
-import os;
-from xml.dom import minidom;
-import polib;
+import getopt, sys
+import textwrap
+from xml.dom import minidom
+import polib
+
+def version():
+    print "transwxl2pot.py version 0.1\n"
+
+def help():
+    print textwrap.dedent("""
+      Usage: transwxl2pot.py [OPTION]... WXL_SOURCE_FILE WXL_TRANSLATED_FILE POT_DEST_FILE
+      Transform the file WXL_SOURCE_FILE in wxl format into a po file POT_DEST_FILE
+      containing the translations from WXL_TRANSLATED_FILE
+      Example: transwxl2pot.py -l LangId en-us.wxl fr-fr.wxl fr-fr.po
+
+      Options:
+        -h, --help:            print this help message and exit
+        -V, --version          print version information and exit
+        -l, --langid=LANGID    ignore string with Id LANGID containing the LCID
+""")
+
+def usage():
+    print textwrap.dedent("""\
+      Usage: transwxl2pot.py [OPTION]... WXL_SOURCE_FILE WXL_TRANSLATED_FILE POT_DEST_FILE
+      Try 'transwxl2pot.py --help' for more information.
+    """)
 
 
-if len(sys.argv) <= 3:
-    print "Usage: transwxl2po.py <wxl file> <wxl translation> <pot file>";
-    os._exit(1);
+# Main
 
-sourcefile = sys.argv[1];
-transfile = sys.argv[2];
-destfile = sys.argv[3];
+langid = ""
+try:
+    opts, args = getopt.getopt(sys.argv[1:], "hVl:", ["help", "version", "langid="])
+except getopt.GetoptError as err:
+    # print help information and exit:
+    print str(err) # will print something like "option -a not recognized"
+    usage()
+    sys.exit(2)
+output = None
+verbose = False
+for o, a in opts:
+    if o in ("-V", "--version"):
+        version()
+        sys.exit()
+    elif o in ("-h", "--help"):
+        help()
+        sys.exit()
+    elif o in ("-l", "--langid"):
+        langid = a
+    else:
+        assert False, "unhandled option"
+
+if len(args) < 3:
+    usage()
+    sys.exit(1)
+
+sourcefile = args[0];
+transfile = args[1];
+destfile = args[2];
 
 
 transdoc = minidom.parse(transfile);
@@ -31,6 +77,8 @@ for node in transnodes:
     if node.nodeType == node.ELEMENT_NODE:
         if node.tagName == "String":
             stringId = node.getAttribute("Id");
+            if stringId == langid:
+                continue
             stringContent = node.firstChild.data;
             translatedStrings[stringId] = stringContent;
 
@@ -60,6 +108,9 @@ for node in nodes:
     if node.nodeType == node.ELEMENT_NODE:
         if node.tagName == "String":
             stringId = node.getAttribute("Id");
+            if stringId == langid:
+                continue
+
             stringContent = node.firstChild.data;
             if stringId in translatedStrings:
                 translation = translatedStrings[stringId];
