@@ -53,6 +53,7 @@ for o, a in opts:
         assert False, "unhandled option"
 
 if len(args) < 3:
+    print "Missing filename parameters"
     usage()
     sys.exit(1)
 

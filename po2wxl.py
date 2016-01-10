@@ -63,6 +63,7 @@ for o, a in opts:
 
 
 if len(args) < 2:
+    print "Missing filename parameters"
     usage()
     sys.exit(1)
 
