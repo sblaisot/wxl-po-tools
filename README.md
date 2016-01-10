@@ -22,26 +22,40 @@ polib can be installed with `pip install polib`
 wxl2pot.py
 ----------
 
-Usage:
-`wxl2pot.py <wxl_sourcefile> <pot_destfile>`
+Usage: `wxl2pot.py [OPTION]... WXL_SOURCE_FILE POT_DEST_FILE`
+Transform the file WXL_SOURCE_FILE in wxl format into a pot file POT_DEST_FILE
+Example: `wxl2pot.py -l LangId en-us.wxl en-us.pot`
 
-read the wxl_sourcefile content and produces a pot file (typically a po file without any translation) as pot_destfile
+Options:
+  * -h, --help:            print this help message and exit
+  * -V, --version          print version information and exit
+  * -l, --langid=LANGID    ignore string with Id LANGID containing the LCID
 
 transwxl2po.py
 --------------
 
-Usage:
-`transwxl2po.py <wxl_sourcefile> <wxl_translationfile> <translated_po_destfile>`
+Usage: `transwxl2pot.py [OPTION]... WXL_SOURCE_FILE WXL_TRANSLATED_FILE POT_DEST_FILE`
+Transform the file WXL_SOURCE_FILE in wxl format into a po file POT_DEST_FILE
+containing the translations from WXL_TRANSLATED_FILE
+Example: `transwxl2pot.py -l LangId en-us.wxl fr-fr.wxl fr-fr.po`
 
-Read the original wxl file and a translated one and create a translated po file as translated_po_destfile
+Options:
+  * -h, --help:            print this help message and exit
+  * -V, --version          print version information and exit
+  * -l, --langid=LANGID    ignore string with Id LANGID containing the LCID
 
 po2wxl.py
 ---------
 
-Usage:
-`po2wxl.py <po_sourcefile> <wxl_destfile>`
+Usage: `po2wxl.py [OPTION]... PO_SOURCE_FILE WXL_DEST_FILE`
+Transform the file PO_SOURCE_FILE in po format into a wxl file WXL_DEST_FILE
+Example: `po2wxl.py -l LangId en-us.po en-us.wxl`
 
-read the translation from po_sourcefile content and produces a wxl file as wxl_destfile
+Options:
+  * -h, --help:               print this help message and exit
+  * -V, --version             print version information and exit
+  * -l, --langid=LANGID       automatically determine LCID based on language and add a string with id LANGID containing the LCID
+  * -p, --percentlimit=LIMIT  do not translate po files which translation percent is below LIMIT. 60% by default
 
 Licence
 -------
