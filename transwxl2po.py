@@ -78,6 +78,7 @@ for node in transnodes:
         if node.tagName == "String":
             stringId = node.getAttribute("Id")
             if stringId == langid:
+                comment = ""
                 continue
             stringContent = node.firstChild.data
             translatedStrings[stringId] = stringContent
