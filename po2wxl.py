@@ -6,7 +6,7 @@ import sys
 reload(sys)  
 sys.setdefaultencoding('utf8')
 
-import getopt
+import getopt, textwrap
 import polib
 from lcid import LCIDs
 
@@ -20,10 +20,12 @@ def help():
       Example: po2wxl.py -l LangId en-us.po en-us.wxl
 
       Options:
-        -h, --help:            print this help message and exit
-        -V, --version          print version information and exit
-        -l, --langid=LANGID    automatically determine LCID based on language and 
-                               add a string with id LANGID containing the LCID
+        -h, --help:               print this help message and exit
+        -V, --version             print version information and exit
+        -l, --langid=LANGID       automatically determine LCID based on language and 
+                                  add a string with id LANGID containing the LCID
+        -p, --percentlimit=LIMIT  do not translate po files which translation percent
+                                  is below LIMIT. 60% by default
 """)
 
 def usage():
@@ -35,8 +37,9 @@ def usage():
 
 # Main
 langid = ""
+translationPercentLimit = 60
 try:
-    opts, args = getopt.getopt(sys.argv[1:], "hVl:", ["help", "version", "langid="])
+    opts, args = getopt.getopt(sys.argv[1:], "hVl:p:", ["help", "version", "langid=", "percentlimit="])
 except getopt.GetoptError as err:
     # print help information and exit:
     print str(err) # will print something like "option -a not recognized"
@@ -53,6 +56,8 @@ for o, a in opts:
         sys.exit()
     elif o in ("-l", "--langid"):
         langid = a
+    elif o in ("-p", "--percentlimit"):
+        translationPercentLimit = int(a)
     else:
         assert False, "unhandled option"
 
@@ -66,8 +71,8 @@ destfile = args[1]
 
 po = polib.pofile(sourcefile)
 
-if po.percent_translated() < 60:
-    print "Skipping " + sourcefile + ": translated at " + str(po.percent_translated()) + "%, below the 60% limit\n"
+if po.percent_translated() <= translationPercentLimit:
+    print "Skipping " + sourcefile + ": translated at " + str(po.percent_translated()) + "%, below the " + str(translationPercentLimit) + "% limit\n"
     sys.exit(0)
 
 metadata = po.ordered_metadata()
