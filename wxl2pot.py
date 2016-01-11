@@ -1,24 +1,37 @@
-#!/usr/bin/python
+#!/usr/bin/env python
+# coding:utf-8
 
-import getopt, sys
+"""wxl2pot.py: Transform wxl localization files to pot format."""
+
+__author__ = "Sébastien Blaisot (sebastien@blaisot.org)"
+__copyright__ = "Copyright (C) 2016 Sébastien Blaisot"
+__license__ = "GPL 3.0"
+__version__ = "0.1"
+__status__ = "Development"
+
+import getopt
+import sys
 import textwrap
+import os.path
 from xml.dom import minidom
+
 import polib
 
 def version():
-    print "wxl2pot.py version 0.1\n"
+    print os.path.basename(__file__) + " version " + __version__ + "\n"
 
 def help():
-    print textwrap.dedent("""
-      Usage: wxl2pot.py [OPTION]... WXL_SOURCE_FILE POT_DEST_FILE
+    print textwrap.dedent("""\
+      Usage: %s [OPTION]... WXL_SOURCE_FILE POT_DEST_FILE
       Transform the file WXL_SOURCE_FILE in wxl format into a pot file POT_DEST_FILE
-      Example: wxl2pot.py -l LangId en-us.wxl en-us.pot
+      Example: %s -l LangId en-us.wxl en-us.pot
       
       Options:
         -h, --help:            print this help message and exit
         -V, --version          print version information and exit
+        -f, --force            don't ask before overwriting destination file
         -l, --langid=LANGID    ignore string with Id LANGID containing the LCID
-""")
+""" % (os.path.basename(__file__), os.path.basename(__file__)))
 
 def usage():
     print textwrap.dedent("""\
@@ -30,8 +43,9 @@ def usage():
 # Main
 
 langid = ""
+force = False
 try:
-    opts, args = getopt.getopt(sys.argv[1:], "hVl:", ["help", "version", "langid="])
+    opts, args = getopt.getopt(sys.argv[1:], "hVfl:", ["help", "version", "force", "langid="])
 except getopt.GetoptError as err:
     # print help information and exit:
     print str(err) # will print something like "option -a not recognized"
@@ -46,6 +60,8 @@ for o, a in opts:
     elif o in ("-h", "--help"):
         help()
         sys.exit()
+    elif o in ("-f", "--force"):
+        force = True
     elif o in ("-l", "--langid"):
         langid = a
     else:
@@ -58,6 +74,17 @@ if len(args) < 2:
 
 sourcefile = args[0]
 destfile = args[1]
+
+if not os.path.exists(sourcefile):
+    print "Source file " + sourcefile + " does not exist. Please provide a valid wxl file"
+    sys.exit(1)
+
+if os.path.exists(destfile) and not force:
+    sys.stdout.write("Destination file " + destfile + " already exists. Overwrite ? [y/N]")
+    choice = raw_input().lower()
+    if choice not in ['yes','y', 'ye']:
+        print "Aborting"
+        sys.exit(1)
 
 doc = minidom.parse(sourcefile)
 
