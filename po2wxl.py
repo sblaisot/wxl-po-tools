@@ -24,6 +24,9 @@ def help():
         -V, --version             print version information and exit
         -l, --langid=LANGID       automatically determine LCID based on language and 
                                   add a string with id LANGID containing the LCID
+        -L, --LCID=LCID           used with -l, use provided LCID instead of trying
+                                  to guess it
+        -C, --codepage=CP         use CP as codepage instead of trying to guess it
         -p, --percentlimit=LIMIT  do not translate po files which translation percent
                                   is below LIMIT. 60% by default
 """)
@@ -37,9 +40,11 @@ def usage():
 
 # Main
 langid = ""
+codepage = ""
+LCID=""
 translationPercentLimit = 60
 try:
-    opts, args = getopt.getopt(sys.argv[1:], "hVl:p:", ["help", "version", "langid=", "percentlimit="])
+    opts, args = getopt.getopt(sys.argv[1:], "hVl:L:C:p:", ["help", "version", "langid=", "LCID=", "codepage=", "percentlimit="])
 except getopt.GetoptError as err:
     # print help information and exit:
     print str(err) # will print something like "option -a not recognized"
@@ -56,6 +61,10 @@ for o, a in opts:
         sys.exit()
     elif o in ("-l", "--langid"):
         langid = a
+    elif o in ("-L", "--LCID"):
+        LCID = a
+    elif o in ("-C", "--codepage"):
+        codepage = a
     elif o in ("-p", "--percentlimit"):
         translationPercentLimit = int(a)
     else:
@@ -82,15 +91,29 @@ language = [value for name, value in metadata if name == "Language"]
 culture = language[0].lower().replace('_','-')
 cultureShort = culture[:2];
 
-if culture in LCIDs.keys():
-    langIdAuto = LCIDs[culture]['LCID']
-    codepage = LCIDs[culture]['codepage']
-elif cultureShort in LCIDs.keys():
-    langIdAuto = LCIDs[cultureShort]['LCID']
-    codepage = LCIDs[cultureShort]['codepage']
+if codepage == "":
+    if culture in LCIDs.keys():
+        codepage = LCIDs[culture]['codepage']
+    elif cultureShort in LCIDs.keys():
+        codepage = LCIDs[cultureShort]['codepage']
+    else:
+        print "Unable to guess codepage based on language " + culture
+        print "Please provide codepage with option -C"
+        print "Try 'po2wxl.py --help' for more information."
+        sys.exit(1)
+
+if LCID != "":
+    langIdAuto = LCID
 else:
-    print "Unknow language: " + culture + ", exiting\n";
-    sys.exit(1);
+    if culture in LCIDs.keys():
+        langIdAuto = LCIDs[culture]['LCID']
+    elif cultureShort in LCIDs.keys():
+        langIdAuto = LCIDs[cultureShort]['LCID']
+    else:
+        print "Unable to guess LCID based on language " + culture
+        print "Please provide LCID with option -L"
+        print "Try 'po2wxl.py --help' for more information."
+        sys.exit(1);
     
 
 f = open(destfile,'w')
