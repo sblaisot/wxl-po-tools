@@ -56,6 +56,7 @@ Example: `po2wxl.py -l LangId en-us.po en-us.wxl`
 Options:  
 `-h, --help`                print this help message and exit  
 `-V, --version`             print version information and exit  
+`-f, --force`            don't ask before overwriting destination file
 `-l, --langid=LANGID`       automatically determine LCID based on language and add a string with id LANGID containing the LCID  
 `-L, --LCID=LCID`           used with -l, use provided LCID instead of trying to guess it
 `-C, --codepage=CP`         use CP as codepage instead of trying to guess it
