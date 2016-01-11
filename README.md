@@ -55,6 +55,8 @@ Options:
 `-h, --help`                print this help message and exit  
 `-V, --version`             print version information and exit  
 `-l, --langid=LANGID`       automatically determine LCID based on language and add a string with id LANGID containing the LCID  
+`-L, --LCID=LCID`           used with -l, use provided LCID instead of trying to guess it
+`-C, --codepage=CP`         use CP as codepage instead of trying to guess it
 `-p, --percentlimit=LIMIT`  do not translate po files which translation percent is below LIMIT. 60% by default
 
 Licence
