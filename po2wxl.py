@@ -80,8 +80,18 @@ metadata = po.ordered_metadata()
 language = [value for name, value in metadata if name == "Language"]
 
 culture = language[0].lower().replace('_','-')
-codepage = LCIDs[culture]['codepage']
-langIdAuto = LCIDs[culture]['LCID']
+cultureShort = culture[:2];
+
+if culture in LCIDs.keys():
+    langIdAuto = LCIDs[culture]['LCID']
+    codepage = LCIDs[culture]['codepage']
+elif cultureShort in LCIDs.keys():
+    langIdAuto = LCIDs[cultureShort]['LCID']
+    codepage = LCIDs[cultureShort]['codepage']
+else:
+    print "Unknow language: " + culture + ", exiting\n";
+    sys.exit(1);
+    
 
 f = open(destfile,'w')
 f.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n")
