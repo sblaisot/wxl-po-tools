@@ -1,27 +1,36 @@
-#!/usr/bin/python
+#!/usr/bin/env python
+# coding:utf-8
 
-# encoding=utf8  
+"""po2wxl.py: Transform a .po translation file into a wxl localization file"""
+
+__author__ = "Sébastien Blaisot (sebastien@blaisot.org)"
+__copyright__ = "Copyright (C) 2016 Sébastien Blaisot"
+__license__ = "GPL 3.0"
+__version__ = "0.1"
+__status__ = "Development"
+
+import getopt
 import sys  
+import textwrap
+import os.path
 
-reload(sys)  
-sys.setdefaultencoding('utf8')
-
-import getopt, textwrap
 import polib
+
 from lcid import LCIDs
 
 def version():
-    print "po2wxl.py version 0.1\n"
+    print os.path.basename(__file__) + " version " + __version__ + "\n"
 
 def help():
     print textwrap.dedent("""
-      Usage: po2wxl.py [OPTION]... PO_SOURCE_FILE WXL_DEST_FILE
+      Usage: %s [OPTION]... PO_SOURCE_FILE WXL_DEST_FILE
       Transform the file PO_SOURCE_FILE in po format into a wxl file WXL_DEST_FILE
-      Example: po2wxl.py -l LangId en-us.po en-us.wxl
+      Example: %s -l LangId en-us.po en-us.wxl
 
       Options:
         -h, --help:               print this help message and exit
         -V, --version             print version information and exit
+        -f, --force            don't ask before overwriting destination file
         -l, --langid=LANGID       automatically determine LCID based on language and 
                                   add a string with id LANGID containing the LCID
         -L, --LCID=LCID           used with -l, use provided LCID instead of trying
@@ -29,13 +38,13 @@ def help():
         -C, --codepage=CP         use CP as codepage instead of trying to guess it
         -p, --percentlimit=LIMIT  do not translate po files which translation percent
                                   is below LIMIT. 60% by default
-""")
+""" % (os.path.basename(__file__), os.path.basename(__file__)))
 
 def usage():
     print textwrap.dedent("""\
-      Usage: po2wxl.py [OPTION]... PO_SOURCE_FILE WXL_DEST_FILE
-      Try 'po2wxl.py --help' for more information.
-    """)
+      Usage: %s [OPTION]... PO_SOURCE_FILE WXL_DEST_FILE
+      Try '%s --help' for more information.
+    """ % (os.path.basename(__file__), os.path.basename(__file__)))
 
 
 # Main
@@ -43,8 +52,9 @@ langid = ""
 codepage = ""
 LCID=""
 translationPercentLimit = 60
+force = False
 try:
-    opts, args = getopt.getopt(sys.argv[1:], "hVl:L:C:p:", ["help", "version", "langid=", "LCID=", "codepage=", "percentlimit="])
+    opts, args = getopt.getopt(sys.argv[1:], "hVfl:L:C:p:", ["help", "version", "force", "langid=", "LCID=", "codepage=", "percentlimit="])
 except getopt.GetoptError as err:
     # print help information and exit:
     print str(err) # will print something like "option -a not recognized"
@@ -59,6 +69,8 @@ for o, a in opts:
     elif o in ("-h", "--help"):
         help()
         sys.exit()
+    elif o in ("-f", "--force"):
+        force = True
     elif o in ("-l", "--langid"):
         langid = a
     elif o in ("-L", "--LCID"):
@@ -78,6 +90,17 @@ if len(args) < 2:
 
 sourcefile = args[0]
 destfile = args[1]
+
+if not os.path.exists(sourcefile):
+    print "Source file " + sourcefile + " does not exist. Please provide a valid wxl file."
+    sys.exit(1)
+
+if os.path.exists(destfile) and not force:
+    sys.stdout.write("Destination file " + destfile + " already exists. Overwrite ? [y/N] ")
+    choice = raw_input().lower()
+    if choice not in ['yes','y', 'ye']:
+        print "Aborting"
+        sys.exit(1)
 
 po = polib.pofile(sourcefile)
 
@@ -143,7 +166,7 @@ for entry in po:
     else:
         translation = entry.msgid
     translation = "&#13;&#10;".join(translation.split("\n")).replace('\r', '')
-    f.write("  <String Id=\"" + entry.msgctxt + "\">" + translation + "</String>\n")
+    f.write("  <String Id=\"" + entry.msgctxt.encode("utf-8") + "\">" + translation.encode("utf-8") + "</String>\n")
 
 f.write("</WixLocalization>\n")
 f.close
