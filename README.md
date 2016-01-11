@@ -43,6 +43,7 @@ Example: `transwxl2pot.py -l LangId en-us.wxl fr-fr.wxl fr-fr.po`
 Options:  
 `-h, --help`             print this help message and exit  
 `-V, --version`          print version information and exit  
+`-f, --force`            don't ask before overwriting destination file
 `-l, --langid=LANGID`    ignore string with Id LANGID containing the LCID
 
 po2wxl.py

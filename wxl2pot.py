@@ -35,9 +35,9 @@ def help():
 
 def usage():
     print textwrap.dedent("""\
-      Usage: wxl2pot.py [OPTION]... WXL_SOURCE_FILE POT_DEST_FILE
-      Try 'wxl2pot.py --help' for more information.
-    """)
+      Usage: %s [OPTION]... WXL_SOURCE_FILE POT_DEST_FILE
+      Try '%s --help' for more information.
+    """ % (os.path.basename(__file__), os.path.basename(__file__)))
 
 
 # Main
@@ -76,11 +76,11 @@ sourcefile = args[0]
 destfile = args[1]
 
 if not os.path.exists(sourcefile):
-    print "Source file " + sourcefile + " does not exist. Please provide a valid wxl file"
+    print "Source file " + sourcefile + " does not exist. Please provide a valid wxl file."
     sys.exit(1)
 
 if os.path.exists(destfile) and not force:
-    sys.stdout.write("Destination file " + destfile + " already exists. Overwrite ? [y/N]")
+    sys.stdout.write("Destination file " + destfile + " already exists. Overwrite ? [y/N] ")
     choice = raw_input().lower()
     if choice not in ['yes','y', 'ye']:
         print "Aborting"
