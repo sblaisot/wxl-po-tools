@@ -29,7 +29,7 @@ Example: `wxl2pot.py -l LangId en-us.wxl en-us.pot`
 Options:  
 `-h, --help`             print this help message and exit  
 `-V, --version`          print version information and exit  
-`-f, --force`            don't ask before overwriting destination file
+`-f, --force`            don't ask before overwriting destination file  
 `-l, --langid=LANGID`    ignore string with Id LANGID containing the LCID
 
 transwxl2po.py
@@ -43,7 +43,7 @@ Example: `transwxl2pot.py -l LangId en-us.wxl fr-fr.wxl fr-fr.po`
 Options:  
 `-h, --help`             print this help message and exit  
 `-V, --version`          print version information and exit  
-`-f, --force`            don't ask before overwriting destination file
+`-f, --force`            don't ask before overwriting destination file  
 `-l, --langid=LANGID`    ignore string with Id LANGID containing the LCID
 
 po2wxl.py
@@ -56,10 +56,10 @@ Example: `po2wxl.py -l LangId en-us.po en-us.wxl`
 Options:  
 `-h, --help`                print this help message and exit  
 `-V, --version`             print version information and exit  
-`-f, --force`            don't ask before overwriting destination file
+`-f, --force`            don't ask before overwriting destination file  
 `-l, --langid=LANGID`       automatically determine LCID based on language and add a string with id LANGID containing the LCID  
-`-L, --LCID=LCID`           used with -l, use provided LCID instead of trying to guess it
-`-C, --codepage=CP`         use CP as codepage instead of trying to guess it
+`-L, --LCID=LCID`           used with -l, use provided LCID instead of trying to guess it  
+`-C, --codepage=CP`         use CP as codepage instead of trying to guess it  
 `-p, --percentlimit=LIMIT`  do not translate po files which translation percent is below LIMIT. 60% by default
 
 Licence
