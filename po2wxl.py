@@ -72,11 +72,11 @@ for o, a in opts:
     elif o in ("-f", "--force"):
         force = True
     elif o in ("-l", "--langid"):
-        langid = a
+        langid = a.encode("utf-8")
     elif o in ("-L", "--LCID"):
-        LCID = a
+        LCID = a.encode("utf-8")
     elif o in ("-C", "--codepage"):
-        codepage = a
+        codepage = a.encode("utf-8")
     elif o in ("-p", "--percentlimit"):
         translationPercentLimit = int(a)
     else:
@@ -144,11 +144,11 @@ f.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n")
 f.write("<WixLocalization Culture=\"" + culture + "\" Codepage=\"" + str(codepage) + "\"\n")
 f.write("                 xmlns=\"http://schemas.microsoft.com/wix/2006/localization\">\n")
 f.write("\n")
-f.write("  <!-- .................................................... -->\n")
-f.write("  <!-- This wxl file has been auto generated from a po file -->\n")
-f.write("  <!-- using https://github.com/sblaisot/wxl-po-tools       -->\n")
-f.write("  <!-- Source File: " + sourcefile.ljust(39) + " -->\n")
-f.write("  <!-- .................................................... -->\n")
+f.write("  <!-- ..................................................... -->\n")
+f.write("  <!-- This wxl file has been auto generated from a po file  -->\n")
+f.write("  <!-- using https://github.com/sblaisot/wxl-po-tools        -->\n")
+f.write("  <!-- Source File: " + sourcefile.ljust(40) + " -->\n")
+f.write("  <!-- ..................................................... -->\n")
 f.write("\n")
 
 if langid:
@@ -165,8 +165,8 @@ for entry in po:
         translation = entry.msgstr
     else:
         translation = entry.msgid
-    translation = "&#13;&#10;".join(translation.split("\n")).replace('\r', '')
-    f.write("  <String Id=\"" + entry.msgctxt.encode("utf-8") + "\">" + translation.encode("utf-8") + "</String>\n")
+    translation = "&#13;&#10;".join(translation.split("\n")).replace('\r', '').encode("utf-8")
+    f.write("  <String Id=\"" + entry.msgctxt.encode("utf-8") + "\">" + translation + "</String>\n")
 
 f.write("</WixLocalization>\n")
 f.close
