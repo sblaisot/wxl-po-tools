@@ -112,7 +112,7 @@ metadata = po.ordered_metadata()
 language = [value for name, value in metadata if name == "Language"]
 
 culture = language[0].lower().replace('_','-')
-cultureShort = culture[:2];
+cultureShort = culture[:culture.index('-')]
 
 if codepage == "":
     if culture in LCIDs.keys():
