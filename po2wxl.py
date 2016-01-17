@@ -125,6 +125,9 @@ if codepage == "":
         print "Try 'po2wxl.py --help' for more information."
         sys.exit(1)
 
+if not codepage:
+    codepage = "65001" # UTF-8 fallback
+
 if LCID != "":
     langIdAuto = LCID
 else:
