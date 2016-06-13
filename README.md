@@ -37,9 +37,9 @@ Options:
 transwxl2po.py
 --------------
 
-Usage: `transwxl2pot.py [OPTION]... WXL_SOURCE_FILE WXL_TRANSLATED_FILE POT_DEST_FILE`
+Usage: `transwxl2pot.py [OPTION]... WXL_SOURCE_FILE WXL_TRANSLATED_FILE PO_DEST_FILE`
 
-Transform the file WXL_SOURCE_FILE in wxl format into a po file POT_DEST_FILE
+Transform the file WXL_SOURCE_FILE in wxl format into a po file PO_DEST_FILE
 containing the translations from WXL_TRANSLATED_FILE
 
 Example: `transwxl2pot.py -l LangId en-us.wxl fr-fr.wxl fr-fr.po`

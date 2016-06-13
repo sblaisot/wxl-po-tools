@@ -22,8 +22,8 @@ def version():
 
 def help():
     print textwrap.dedent("""
-      Usage: %s [OPTION]... WXL_SOURCE_FILE WXL_TRANSLATED_FILE POT_DEST_FILE
-      Transform the file WXL_SOURCE_FILE in wxl format into a po file POT_DEST_FILE
+      Usage: %s [OPTION]... WXL_SOURCE_FILE WXL_TRANSLATED_FILE PO_DEST_FILE
+      Transform the file WXL_SOURCE_FILE in wxl format into a po file PO_DEST_FILE
       containing the translations from WXL_TRANSLATED_FILE
       Example: %s -l LangId en-us.wxl fr-fr.wxl fr-fr.po
 
@@ -36,7 +36,7 @@ def help():
 
 def usage():
     print textwrap.dedent("""\
-      Usage: %s [OPTION]... WXL_SOURCE_FILE WXL_TRANSLATED_FILE POT_DEST_FILE
+      Usage: %s [OPTION]... WXL_SOURCE_FILE WXL_TRANSLATED_FILE PO_DEST_FILE
       Try '%s --help' for more information.
     """ % (os.path.basename(__file__), os.path.basename(__file__)))
 
@@ -147,7 +147,7 @@ for node in nodes:
             if stringId in translatedStrings:
                 translation = translatedStrings[stringId]
             else:
-                translation = stringContent; 
+                translation = stringContent;
             entry = polib.POEntry(
                 comment = comment,
                 msgctxt = stringId,
