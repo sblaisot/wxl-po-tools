@@ -13,6 +13,7 @@ import getopt
 import sys  
 import textwrap
 import os.path
+from xml.sax.saxutils import escape
 
 import polib
 
@@ -165,9 +166,9 @@ for entry in po:
         f.write("\n")
         f.write("  <!--" + entry.comment.replace('\n', ' -->\n  <!--') + " -->\n")
     if entry.msgstr != "":
-        translation = entry.msgstr
+        translation = escape(entry.msgstr)
     else:
-        translation = entry.msgid
+        translation = escape(entry.msgid)
     translation = "&#13;&#10;".join(translation.split("\n")).replace('\r', '').encode("utf-8")
     f.write("  <String Id=\"" + entry.msgctxt.encode("utf-8") + "\">" + translation + "</String>\n")
 
