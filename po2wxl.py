@@ -4,13 +4,13 @@
 """po2wxl.py: Transform a .po translation file into a wxl localization file"""
 
 __author__ = "Sébastien Blaisot (sebastien@blaisot.org)"
-__copyright__ = "Copyright (C) 2016 Sébastien Blaisot"
+__copyright__ = "Copyright (C) 2016-2017 Sébastien Blaisot"
 __license__ = "GPL 3.0"
 __version__ = "0.1"
 __status__ = "Development"
 
 import getopt
-import sys  
+import sys
 import textwrap
 import os.path
 from xml.sax.saxutils import escape
@@ -32,7 +32,7 @@ def help():
         -h, --help:               print this help message and exit
         -V, --version             print version information and exit
         -f, --force            don't ask before overwriting destination file
-        -l, --langid=LANGID       automatically determine LCID based on language and 
+        -l, --langid=LANGID       automatically determine LCID based on language and
                                   add a string with id LANGID containing the LCID
         -L, --LCID=LCID           used with -l, use provided LCID instead of trying
                                   to guess it
@@ -141,7 +141,7 @@ else:
         print "Please provide LCID with option -L"
         print "Try 'po2wxl.py --help' for more information."
         sys.exit(1);
-    
+
 
 f = open(destfile,'w')
 f.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n")

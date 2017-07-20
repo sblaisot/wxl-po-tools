@@ -4,7 +4,7 @@
 """transwxl2po.py: Transform a main language wxl file and a translated wxl file into a .po translation file"""
 
 __author__ = "Sébastien Blaisot (sebastien@blaisot.org)"
-__copyright__ = "Copyright (C) 2016 Sébastien Blaisot"
+__copyright__ = "Copyright (C) 2016-2017 Sébastien Blaisot"
 __license__ = "GPL 3.0"
 __version__ = "0.1"
 __status__ = "Development"

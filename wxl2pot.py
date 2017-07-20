@@ -4,7 +4,7 @@
 """wxl2pot.py: Transform wxl localization files to pot format."""
 
 __author__ = "Sébastien Blaisot (sebastien@blaisot.org)"
-__copyright__ = "Copyright (C) 2016 Sébastien Blaisot"
+__copyright__ = "Copyright (C) 2016-2017 Sébastien Blaisot"
 __license__ = "GPL 3.0"
 __version__ = "0.1"
 __status__ = "Development"
@@ -25,7 +25,7 @@ def help():
       Usage: %s [OPTION]... WXL_SOURCE_FILE POT_DEST_FILE
       Transform the file WXL_SOURCE_FILE in wxl format into a pot file POT_DEST_FILE
       Example: %s -l LangId en-us.wxl en-us.pot
-      
+
       Options:
         -h, --help:            print this help message and exit
         -V, --version          print version information and exit
