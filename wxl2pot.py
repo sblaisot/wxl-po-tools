@@ -6,7 +6,7 @@
 __author__ = "Sébastien Blaisot (sebastien@blaisot.org)"
 __copyright__ = "Copyright (C) 2016-2017 Sébastien Blaisot"
 __license__ = "GPL 3.0"
-__version__ = "0.1"
+__version__ = "0.2-pre"
 __status__ = "Development"
 
 import getopt
